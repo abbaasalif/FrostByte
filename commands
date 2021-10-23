@@ -1,0 +1,5 @@
+python initialize_database.py --conf config/config.json
+python enroll.py --id 001 --name Abbaas --conf config/config.json
+python encode_faces.py --conf config/config.json
+python train_model.py --conf config/config.json
+python attendance.py --conf config/config.json

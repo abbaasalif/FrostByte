@@ -1,0 +1,8 @@
+imutils
+tinydb==3.15.2
+cmake
+face_recognition
+pyttsx3
+opencv-python
+json_minify
+scikit-learn
