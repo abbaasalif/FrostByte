@@ -16,7 +16,42 @@ import pyttsx3
 import pickle
 import time
 import cv2
+import Jetson.GPIO as GPIO
 
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(3, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(5, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(7, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
+
+def forward(steps):
+	for i in range (0,steps):
+		GPIO.output(3, GPIO.HIGH)
+		GPIO.output(5, GPIO.LOW)
+		GPIO.output(7, GPIO.LOW)
+		GPIO.output(8, GPIO.LOW)
+		delay(10)
+		GPIO.output(3, GPIO.LOW)
+		GPIO.output(5, GPIO.HIGH)
+		GPIO.output(7, GPIO.LOW)
+		GPIO.output(8, GPIO.LOW)
+		delay(10)
+		GPIO.output(3, GPIO.LOW)
+		GPIO.output(5, GPIO.LOW)
+		GPIO.output(7, GPIO.HIGH)
+		GPIO.output(8, GPIO.LOW)
+		delay(10)
+		GPIO.output(3, GPIO.LOW)
+		GPIO.output(5, GPIO.LOW)
+		GPIO.output(7, GPIO.LOW)
+		GPIO.output(8, GPIO.HIGH)
+		delay(10)
+	GPIO.output(3, GPIO.LOW)
+	GPIO.output(5, GPIO.LOW)
+	GPIO.output(7, GPIO.LOW)
+	GPIO.output(8, GPIO.LOW)
+		
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", "--conf", required=True, 
