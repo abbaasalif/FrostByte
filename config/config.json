@@ -10,7 +10,7 @@
 	"class": "morsestudio",
 
 	// timing of the class
-	"timing": "04:43",
+	"timing": "12:15",
 
 	// number of face detections before actually saving the faces to
 	// disk
@@ -25,7 +25,7 @@
 
 	// number of consecutive recognitions to be made to mark a person
 	// recognized
-	"consec_count": 3,
+	"consec_count": 1,
 
 	// path to the database
 	"db_path": "database/attendance.json",
