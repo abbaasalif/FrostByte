@@ -186,7 +186,7 @@ while True:
 			curPerson = le.classes_[j]
 		else:
 			curPerson = '000' #unknown
-		if curPerson:		
+		if curPerson != None or curPerson != '000':		
 			print('found'+"_"+str(curPerson))
 			forward(300)
 			backward(200)
