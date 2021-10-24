@@ -181,8 +181,11 @@ while True:
 				
 		# perform classification to recognize the face
 		preds = recognizer.predict_proba(encodings)[0]
-		j = np.argmax(preds)
-		curPerson = le.classes_[j]
+		if max(preds)>0.5:
+			j = np.argmax(preds)
+			curPerson = le.classes_[j]
+		else:
+			curPerson = '000' #unknown
 		if curPerson:		
 			print('found'+"_"+str(curPerson))
 			forward(300)
