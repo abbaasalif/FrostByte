@@ -224,15 +224,15 @@ while True:
 		
 				# construct a label asking the student to stand in fron
 				# to the camera and draw it on to the frame
-		label = "Please stand in front of the camera"
-		cv2.putText(frame, label, (5, 175),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-		curPerson = None
+		#label = "Please stand in front of the camera"
+		#cv2.putText(frame, label, (5, 175),
+		#cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+		#curPerson = None
 	
 		
 
 		# show the frame
-	cv2.imshow("Attendance System", frame)
+	#cv2.imshow("Attendance System", frame)
 	key = cv2.waitKey(1) & 0xFF
 
 # check if the `q` key was pressed
