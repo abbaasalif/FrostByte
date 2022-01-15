@@ -26,11 +26,13 @@ studentTable = db.table("student")
 
 # retrieve the student document from the database, mark the student 
 # as unenrolled, and write back the document to the database
-# student = studentTable.search(where(args["id"]))
+student = studentTable.search(where(args["id"]))
+print(student)
 # student[0][args["id"]][1] = "unenrolled"
 # studentTable.write_back(student)
 #to remove the record from the database
-db.remove(where('id') == args["id"])
+
+#db.remove()
 # delete the student's data from the dataset
 shutil.rmtree(os.path.join(conf["dataset_path"], conf["class"],
 	args["id"]))
