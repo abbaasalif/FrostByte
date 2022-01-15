@@ -26,7 +26,7 @@ studentTable = db.table("student")
 
 # retrieve the student document from the database, mark the student 
 # as unenrolled, and write back the document to the database
-student = studentTable.search(where(args["id"]))
+student = db.search(where(args["id"]))
 print(student)
 # student[0][args["id"]][1] = "unenrolled"
 # studentTable.write_back(student)
