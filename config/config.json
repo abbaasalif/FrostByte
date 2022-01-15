@@ -4,7 +4,7 @@
 	"rate": 175,
 
 	// path to the dataset directory
-	"dataset_path": "./datasets/attendance_system_dataset",
+	"dataset_path": "/home/pi/Documents/FrostByte/datasets/attendance_system_dataset",
 
 	// school/university code for the class
 	"class": "morsestudio",
