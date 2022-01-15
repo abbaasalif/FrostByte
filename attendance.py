@@ -18,58 +18,84 @@ import time
 import cv2
 import RPi.GPIO as GPIO
 
-stepper_1 = 11
-stepper_2 = 13
-stepper_3 = 15
-stepper_4 = 16
+# stepper_1 = 11
+# stepper_2 = 13
+# stepper_3 = 15
+# stepper_4 = 16
 
-t_delay = .01
+# t_delay = .01
+
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setup(stepper_1, GPIO.OUT, initial=GPIO.LOW)
+# GPIO.setup(stepper_2, GPIO.OUT, initial=GPIO.LOW)
+# GPIO.setup(stepper_3, GPIO.OUT, initial=GPIO.LOW)
+# GPIO.setup(stepper_4, GPIO.OUT, initial=GPIO.LOW)
+
+
+# def forward(steps):
+# 	for i in range (0,steps):
+# 		GPIO.output(stepper_1, GPIO.LOW)
+# 		GPIO.output(stepper_4, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_4, GPIO.LOW)
+# 		GPIO.output(stepper_3, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_3, GPIO.LOW)
+# 		GPIO.output(stepper_2, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_2, GPIO.LOW)
+# 		GPIO.output(stepper_1, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 	GPIO.output(stepper_1, GPIO.LOW)
+# 	GPIO.output(stepper_2, GPIO.LOW)
+# 	GPIO.output(stepper_3, GPIO.LOW)
+# 	GPIO.output(stepper_4, GPIO.LOW)
+
+# def backward(steps):
+# 	for i in range (0,steps):
+# 		GPIO.output(stepper_4, GPIO.LOW)
+# 		GPIO.output(stepper_1, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_1, GPIO.LOW)
+# 		GPIO.output(stepper_2, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_2, GPIO.LOW)
+# 		GPIO.output(stepper_3, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 		GPIO.output(stepper_3, GPIO.LOW)
+# 		GPIO.output(stepper_4, GPIO.HIGH)
+# 		time.sleep(t_delay)
+# 	GPIO.output(stepper_1, GPIO.LOW)
+# 	GPIO.output(stepper_2, GPIO.LOW)
+# 	GPIO.output(stepper_3, GPIO.LOW)
+# 	GPIO.output(stepper_4, GPIO.LOW)
+
+driver_port_1 = 11
+driver_port_2 = 13
+button_port = 10
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(stepper_1, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_2, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_3, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_4, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setwarnings(False)
+GPIO.setup(driver_port_1, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(driver_port_2, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(button_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
-def forward(steps):
-	for i in range (0,steps):
-		GPIO.output(stepper_1, GPIO.LOW)
-		GPIO.output(stepper_4, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_4, GPIO.LOW)
-		GPIO.output(stepper_3, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_3, GPIO.LOW)
-		GPIO.output(stepper_2, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_2, GPIO.LOW)
-		GPIO.output(stepper_1, GPIO.HIGH)
-		time.sleep(t_delay)
-	GPIO.output(stepper_1, GPIO.LOW)
-	GPIO.output(stepper_2, GPIO.LOW)
-	GPIO.output(stepper_3, GPIO.LOW)
-	GPIO.output(stepper_4, GPIO.LOW)
 
-def backward(steps):
-	for i in range (0,steps):
-		GPIO.output(stepper_4, GPIO.LOW)
-		GPIO.output(stepper_1, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_1, GPIO.LOW)
-		GPIO.output(stepper_2, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_2, GPIO.LOW)
-		GPIO.output(stepper_3, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_3, GPIO.LOW)
-		GPIO.output(stepper_4, GPIO.HIGH)
-		time.sleep(t_delay)
-	GPIO.output(stepper_1, GPIO.LOW)
-	GPIO.output(stepper_2, GPIO.LOW)
-	GPIO.output(stepper_3, GPIO.LOW)
-	GPIO.output(stepper_4, GPIO.LOW)
+def forward():
+    GPIO.output(driver_port_1, GPIO.HIGH)
+    GPIO.output(driver_port_2, GPIO.LOW)
+    time.sleep(.8)
+    GPIO.output(driver_port_1, GPIO.LOW)
+    GPIO.output(driver_port_2, GPIO.LOW)
 
+
+def backward():
+    GPIO.output(driver_port_1, GPIO.LOW)
+    GPIO.output(driver_port_2, GPIO.HIGH)
+    time.sleep(.65)
+    GPIO.output(driver_port_1, GPIO.LOW)
+    GPIO.output(driver_port_2, GPIO.LOW)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -113,7 +139,6 @@ print("[INFO] taking attendance...")
 # initialize a dictionary to store the student ID and the time at
 # which their attendance was taken
 studentDict = {}
-
 # loop over the frames from the video stream	
 while True:
 	# store the current time and calculate the time difference
@@ -161,18 +186,18 @@ while True:
 		model=conf["detection_method"])
 
 		# loop over the face detections
-	for (top, right, bottom, left) in boxes:
-			# draw the face detections on the frame
-		cv2.rectangle(frame, (left, top), (right, bottom),
-					(0, 255, 0), 2)
+	# for (top, right, bottom, left) in boxes:
+	# 		# draw the face detections on the frame
+	# 	cv2.rectangle(frame, (left, top), (right, bottom),
+	# 				(0, 255, 0), 2)
 
 			# calculate the time remaining for attendance to be taken
 
 			# draw info such as class, class timing, current time, and
 			# remaining attendance time on the frame
-	cv2.putText(frame, "Current time: {}".format(
-	currentTime.strftime("%H:%M:%S")), (10, 40),
-	cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+	# cv2.putText(frame, "Current time: {}".format(
+	# currentTime.strftime("%H:%M:%S")), (10, 40),
+	# cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
 	
 	# check if atleast one face has been detected	
 	if len(boxes) > 0:
@@ -188,8 +213,9 @@ while True:
 			curPerson = '000' #unknown
 		if curPerson != None or curPerson != '000':		
 			print('found'+"_"+str(curPerson))
-			forward(300)
-			backward(200)
+			forward()
+			time.sleep(5)
+			backward()
 		# if a particular person is recognized for a given
 		# number of consecutive frames, we have reached a 
 		# positive recognition and alert/greet the person accordingly
