@@ -116,8 +116,8 @@ recognizer = pickle.loads(open(conf["recognizer_path"], "rb").read())
 le = pickle.loads(open(conf["le_path"], "rb").read())
 
 def recognize():
+        timeout = time.time() + 40
         while True:
-        # initialize the video stream and allow the camera sensor to warmup
                 print("[INFO] warming up camera...")
                 vs = VideoStream(src=0).start()
                 # vs = VideoStream(usePiCamera=True).start()
@@ -171,10 +171,10 @@ def recognize():
 
 	#show the frame
 	#cv2.imshow("Attendance System", frame)
-                key = cv2.waitKey(1) & 0xFF
+                # key = cv2.waitKey(1) & 0xFF
 
-                if key == ord('q'):
-                        break
+                # if key == ord('q'):
+                #         break
 	
 
 		# convert the frame from RGB (OpenCV ordering) to dlib 
@@ -236,10 +236,10 @@ def recognize():
 
 		# show the frame
 	#cv2.imshow("Attendance System", frame)
-                key = cv2.waitKey(1) & 0xFF
+                # key = cv2.waitKey(1) & 0xFF
 
 # check if the `q` key was pressed
-                if key == ord("q"):
+                if time.time() > timeout:
 		# check if the student dictionary is not empty, and if so,
 		# insert the attendance into the database
 		#if len(studentDict) != 0:
@@ -253,3 +253,13 @@ def recognize():
         time.sleep(3.0)
         vs.stop()
         db.close()
+
+def button_callback(channel):
+    if GPIO.input(button_port) == GPIO.HIGH:
+        recognize()
+        time.sleep(5)
+
+GPIO.add_event_detect(10, GPIO.RISING, callback=button_callback)
+
+while True:
+        time.sleep(1)
