@@ -28,12 +28,12 @@
 	"consec_count": 1,
 
 	// path to the database
-	"db_path": "database/attendance.json",
+	"db_path": "/home/pi/Documents/FrostByte/database/attendance.json",
 
 	// paths to the encodings, recognizer, and label encoder
-	"encodings_path": "output/encodings.pickle",
-	"recognizer_path": "output/recognizer.pickle",
-	"le_path": "output/le.pickle",
+	"encodings_path": "/home/pi/Documents/FrostByte/output/encodings.pickle",
+	"recognizer_path": "/home/pi/Documents/FrostByte/output/recognizer.pickle",
+	"le_path": "/home/pi/Documents/FrostByte/output/le.pickle",
 
 	// dlib face detection to be used
 	"detection_method": "hog"
