@@ -107,7 +107,7 @@ def recognize():
 def button_callback(channel):
     if GPIO.input(button_port) == GPIO.HIGH:
         print("Button is pressed!!")
-        #recognize()
+        recognize()
         time.sleep(5)
 
 GPIO.add_event_detect(button_port, GPIO.RISING, callback=button_callback)
