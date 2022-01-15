@@ -31,13 +31,12 @@ student = studentTable.get(where(args["id"]))
 #to remove the record from the database
 val = list(student.keys())
 rm = val[0]
-print(rm)
-print(type(rm))
+studentTable.remove(where(rm))
 # delete the student's data from the dataset
-shutil.rmtree(os.path.join(conf["dataset_path"], conf["class"],
-	args["id"]))
-print("[INFO] Please extract the embeddings and re-train the face" \
-	" recognition model...")
+# shutil.rmtree(os.path.join(conf["dataset_path"], conf["class"],
+# 	args["id"]))
+# print("[INFO] Please extract the embeddings and re-train the face" \
+# 	" recognition model...")
 
 # close the database
 db.close()
