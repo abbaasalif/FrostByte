@@ -9,7 +9,6 @@ from tinydb import where
 import face_recognition
 import argparse
 import imutils
-import pyttsx3
 import time
 import cv2
 import os
@@ -50,14 +49,14 @@ if len(student) == 0:
 
 	# initialize the text-to-speech engine, set the speech language, and
 	# the speech rate
-	ttsEngine = pyttsx3.init()
-	ttsEngine.setProperty("voice", conf["language"])
-	ttsEngine.setProperty("rate", conf["rate"])
+	# ttsEngine = pyttsx3.init()
+	# ttsEngine.setProperty("voice", conf["language"])
+	# ttsEngine.setProperty("rate", conf["rate"])
 
 	# ask the student to stand in front of the camera
-	ttsEngine.say("{} please stand in front of the camera until you" \
-		"receive further instructions".format(args["name"]))
-	ttsEngine.runAndWait()
+	# ttsEngine.say("{} please stand in front of the camera until you" \
+	# 	"receive further instructions".format(args["name"]))
+	# ttsEngine.runAndWait()
 
 	# initialize the status as detecting
 	status = "detecting"
@@ -120,10 +119,10 @@ if len(student) == 0:
 		# if the required number of faces are saved then break out from
 		# the loop 
 		if total == conf["face_count"]:
-			# let the student know that face enrolling is over
-			ttsEngine.say("Thank you {} you are now enrolled in the {} " \
-				"class.".format(args["name"], conf["class"]))
-			ttsEngine.runAndWait()
+			# # let the student know that face enrolling is over
+			# ttsEngine.say("Thank you {} you are now enrolled in the {} " \
+			# 	"class.".format(args["name"], conf["class"]))
+			# ttsEngine.runAndWait()
 			break
 
 	# insert the student details into the database
