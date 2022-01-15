@@ -120,14 +120,9 @@ def recognize():
         while True:
                 print("[INFO] warming up camera...")
                 vs = VideoStream(src=0).start()
-                # vs = VideoStream(usePiCamera=True).start()
                 time.sleep(2.0)
-
-                # initialize previous and current person to None
                 prevPerson = None
                 curPerson = None
-
-                # initialize consecutive recognition count to 0
                 consecCount = 0
 
         # initialize the text-to-speech engine, set the speech language, and
@@ -240,12 +235,6 @@ def recognize():
 
 # check if the `q` key was pressed
                 if time.time() > timeout:
-		# check if the student dictionary is not empty, and if so,
-		# insert the attendance into the database
-		#if len(studentDict) != 0:
-			#attendanceTable.insert({str(date.today()): studentDict})
-			
-		# break from the loop
                         break
 
 # clean up
@@ -257,7 +246,7 @@ def recognize():
 def button_callback(channel):
     if GPIO.input(button_port) == GPIO.HIGH:
         print("Button is pressed!!")
-        recognize()
+        #recognize()
         time.sleep(5)
 
 GPIO.add_event_detect(10, GPIO.RISING, callback=button_callback)
