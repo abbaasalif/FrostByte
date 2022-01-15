@@ -88,7 +88,7 @@ def recognize():
                                 j = np.argmax(preds)
                                 curPerson = le.classes_[j]
                         else:
-                                curPerson = '000' #unknown
+                                curPerson = '000'
                         if curPerson != '000':		
                                 print('found'+"_"+str(curPerson))
                                 forward()
@@ -97,7 +97,7 @@ def recognize():
                 elif len(boxes) == 0:
                     print('Stand in front dumb person!!!')
                 
-                if time.time() > timeout:
+                if (curPerson != '000' and curPerson) or  time.time() > timeout:
                         break
         print("[INFO] cleaning up...")
         time.sleep(3.0)
