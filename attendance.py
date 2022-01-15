@@ -64,17 +64,17 @@ recognizer = pickle.loads(open(conf["recognizer_path"], "rb").read())
 le = pickle.loads(open(conf["le_path"], "rb").read())
 
 def recognize():
+        vs = VideoStream(src=0).start()
+        time.sleep(2.0)
+        prevPerson = None
+        curPerson = None
+        consecCount = 0
+        print("[INFO] taking attendance...")
+        studentDict = {}
+        currentTime = datetime.now()
         timeout = time.time() + 40
         while True:
                 print("[INFO] warming up camera...")
-                vs = VideoStream(src=0).start()
-                time.sleep(2.0)
-                prevPerson = None
-                curPerson = None
-                consecCount = 0
-                print("[INFO] taking attendance...")
-                studentDict = {}
-                currentTime = datetime.now()
                 frame = vs.read()
                 frame = imutils.resize(frame, width=400)
                 frame = cv2.flip(frame, 1)
