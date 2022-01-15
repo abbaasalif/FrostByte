@@ -221,6 +221,7 @@ while True:
 	
 		
 	elif len(boxes) == 0:
+            print('Stand in front dumb person!!!')
 		
 				# construct a label asking the student to stand in fron
 				# to the camera and draw it on to the frame
