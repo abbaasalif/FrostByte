@@ -113,4 +113,4 @@ def button_callback(channel):
 GPIO.add_event_detect(button_port, GPIO.RISING, callback=button_callback)
 
 while True:
-        time.sleep(.5)
+        time.sleep(1)
