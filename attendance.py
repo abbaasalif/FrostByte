@@ -12,7 +12,6 @@ import face_recognition
 import numpy as np
 import argparse
 import imutils
-import pyttsx3
 import pickle
 import time
 import cv2
