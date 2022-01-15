@@ -72,7 +72,7 @@ def recognize():
         print("[INFO] taking attendance...")
         studentDict = {}
         currentTime = datetime.now()
-        timeout = time.time() + 40
+        timeout = time.time() + 22
         while True:
                 print("[INFO] warming up camera...")
                 frame = vs.read()
