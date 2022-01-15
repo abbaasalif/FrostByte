@@ -205,7 +205,7 @@ while True:
 				
 		# perform classification to recognize the face
 		preds = recognizer.predict_proba(encodings)[0]
-		if max(preds)>0.5:
+		if max(preds)>0.8:
 			j = np.argmax(preds)
 			curPerson = le.classes_[j]
 		else:
