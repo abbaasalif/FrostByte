@@ -30,8 +30,9 @@ student = studentTable.get(where(args["id"]))
 # studentTable.write_back(student)
 #to remove the record from the database
 val = list(student.keys())
-#val = val[0]
-print(val)
+rm = val[0]
+print(rm)
+print(type(rm))
 # delete the student's data from the dataset
 shutil.rmtree(os.path.join(conf["dataset_path"], conf["class"],
 	args["id"]))
