@@ -161,14 +161,14 @@ while True:
 
 			# draw info such as class, class timing, and current time on
 			# the frame
-	cv2.putText(frame, "Class: {}".format(conf["class"]),
-		(10, 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
-	cv2.putText(frame, "Current time: {}".format(
-	currentTime.strftime("%H:%M:%S")), (10, 40),
-	cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+	#cv2.putText(frame, "Class: {}".format(conf["class"]),
+		#(10, 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+	#cv2.putText(frame, "Current time: {}".format(
+	#currentTime.strftime("%H:%M:%S")), (10, 40),
+	#cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
 
 	#show the frame
-	cv2.imshow("Attendance System", frame)
+	#cv2.imshow("Attendance System", frame)
 	key = cv2.waitKey(1) & 0xFF
 
 	if key == ord('q'):
