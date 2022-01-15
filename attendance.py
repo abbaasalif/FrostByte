@@ -115,39 +115,41 @@ attendanceTable = db.table("attendance")
 recognizer = pickle.loads(open(conf["recognizer_path"], "rb").read())
 le = pickle.loads(open(conf["le_path"], "rb").read())
 
-# initialize the video stream and allow the camera sensor to warmup
-print("[INFO] warming up camera...")
-vs = VideoStream(src=0).start()
-# vs = VideoStream(usePiCamera=True).start()
-time.sleep(2.0)
+def recognize():
+        while True:
+        # initialize the video stream and allow the camera sensor to warmup
+                print("[INFO] warming up camera...")
+                vs = VideoStream(src=0).start()
+                # vs = VideoStream(usePiCamera=True).start()
+                time.sleep(2.0)
 
-# initialize previous and current person to None
-prevPerson = None
-curPerson = None
+                # initialize previous and current person to None
+                prevPerson = None
+                curPerson = None
 
-# initialize consecutive recognition count to 0
-consecCount = 0
+                # initialize consecutive recognition count to 0
+                consecCount = 0
 
-# initialize the text-to-speech engine, set the speech language, and
-# the speech rate
-print("[INFO] taking attendance...")
-#ttsEngine = pyttsx3.init()
-#ttsEngine.setProperty("voice", conf["language"])
-#ttsEngine.setProperty("rate", conf["rate"])
+        # initialize the text-to-speech engine, set the speech language, and
+        # the speech rate
+                print("[INFO] taking attendance...")
+        #ttsEngine = pyttsx3.init()
+        #ttsEngine.setProperty("voice", conf["language"])
+        #ttsEngine.setProperty("rate", conf["rate"])
 
-# initialize a dictionary to store the student ID and the time at
-# which their attendance was taken
-studentDict = {}
+        # initialize a dictionary to store the student ID and the time at
+        # which their attendance was taken
+                studentDict = {}
 # loop over the frames from the video stream	
-while True:
+
 	# store the current time and calculate the time difference
 	# between the current time and the time for the 
-	currentTime = datetime.now()
+                currentTime = datetime.now()
 	# grab the next frame from the stream, resize it and flip it
 	# horizontally
-	frame = vs.read()
-	frame = imutils.resize(frame, width=400)
-	frame = cv2.flip(frame, 1)
+                frame = vs.read()
+                frame = imutils.resize(frame, width=400)
+                frame = cv2.flip(frame, 1)
 
 	# if the maximum time limit to record attendance has been crossed
 	# then skip the attendance taking procedure
@@ -169,20 +171,20 @@ while True:
 
 	#show the frame
 	#cv2.imshow("Attendance System", frame)
-	key = cv2.waitKey(1) & 0xFF
+                key = cv2.waitKey(1) & 0xFF
 
-	if key == ord('q'):
-		break
+                if key == ord('q'):
+                        break
 	
 
 		# convert the frame from RGB (OpenCV ordering) to dlib 
 	# ordering (RGB)
-	rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	# detect the (x, y)-coordinates of the bounding boxes
 	# corresponding to each face in the input image
 				
-	boxes = face_recognition.face_locations(rgb,
-		model=conf["detection_method"])
+                boxes = face_recognition.face_locations(rgb,
+                    model=conf["detection_method"])
 
 		# loop over the face detections
 	# for (top, right, bottom, left) in boxes:
@@ -199,29 +201,29 @@ while True:
 	# cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
 	
 	# check if atleast one face has been detected	
-	if len(boxes) > 0:
+                if len(boxes) > 0:
 			# compute the facial embedding for the face
-		encodings = face_recognition.face_encodings(rgb, boxes)
+                        encodings = face_recognition.face_encodings(rgb, boxes)
 				
 		# perform classification to recognize the face
-		preds = recognizer.predict_proba(encodings)[0]
-		if max(preds)>0.8:
-			j = np.argmax(preds)
-			curPerson = le.classes_[j]
-		else:
-			curPerson = '000' #unknown
-		if curPerson != None or curPerson != '000':		
-			print('found'+"_"+str(curPerson))
-			forward()
-			time.sleep(5)
-			backward()
+                        preds = recognizer.predict_proba(encodings)[0]
+                        if max(preds)>0.8:
+                                j = np.argmax(preds)
+                                curPerson = le.classes_[j]
+                        else:
+                                curPerson = '000' #unknown
+                        if curPerson != '000':		
+                                print('found'+"_"+str(curPerson))
+                                forward()
+                                time.sleep(5)
+                                backward()
 		# if a particular person is recognized for a given
 		# number of consecutive frames, we have reached a 
 		# positive recognition and alert/greet the person accordingly
 	
 		
-	elif len(boxes) == 0:
-            print('Stand in front dumb person!!!')
+                elif len(boxes) == 0:
+                    print('Stand in front dumb person!!!')
 		
 				# construct a label asking the student to stand in fron
 				# to the camera and draw it on to the frame
@@ -234,20 +236,20 @@ while True:
 
 		# show the frame
 	#cv2.imshow("Attendance System", frame)
-	key = cv2.waitKey(1) & 0xFF
+                key = cv2.waitKey(1) & 0xFF
 
 # check if the `q` key was pressed
-	if key == ord("q"):
+                if key == ord("q"):
 		# check if the student dictionary is not empty, and if so,
 		# insert the attendance into the database
 		#if len(studentDict) != 0:
 			#attendanceTable.insert({str(date.today()): studentDict})
 			
 		# break from the loop
-		break
+                        break
 
 # clean up
-print("[INFO] cleaning up...")
-time.sleep(3.0)
-vs.stop()
-db.close()
+        print("[INFO] cleaning up...")
+        time.sleep(3.0)
+        vs.stop()
+        db.close()
