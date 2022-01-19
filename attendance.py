@@ -18,57 +18,32 @@ import time
 import cv2
 import RPi.GPIO as GPIO
 
-stepper_1 = 11
-stepper_2 = 13
-stepper_3 = 15
-stepper_4 = 16
-
-t_delay = .01
+driver_port_1 = 1
+driver_port_2 = 2
+button_port = 37
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(stepper_1, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_2, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_3, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(stepper_4, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(driver_port_1, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(driver_port_2, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(button_port, GPIO.IN)
 
 
-def forward(steps):
-	for i in range (0,steps):
-		GPIO.output(stepper_1, GPIO.LOW)
-		GPIO.output(stepper_4, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_4, GPIO.LOW)
-		GPIO.output(stepper_3, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_3, GPIO.LOW)
-		GPIO.output(stepper_2, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_2, GPIO.LOW)
-		GPIO.output(stepper_1, GPIO.HIGH)
-		time.sleep(t_delay)
-	GPIO.output(stepper_1, GPIO.LOW)
-	GPIO.output(stepper_2, GPIO.LOW)
-	GPIO.output(stepper_3, GPIO.LOW)
-	GPIO.output(stepper_4, GPIO.LOW)
+
+def forward():
+	GPIO.output(driver_port_1, GPIO.HIGH)
+	GPIO.output(driver_port_2, GPIO.LOW)
+	time.sleep(2)
+	GPIO.output(driver_port_1, GPIO.LOW)
+	GPIO.output(driver_port_2, GPIO.LOW)
+
 
 def backward(steps):
-	for i in range (0,steps):
-		GPIO.output(stepper_4, GPIO.LOW)
-		GPIO.output(stepper_1, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_1, GPIO.LOW)
-		GPIO.output(stepper_2, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_2, GPIO.LOW)
-		GPIO.output(stepper_3, GPIO.HIGH)
-		time.sleep(t_delay)
-		GPIO.output(stepper_3, GPIO.LOW)
-		GPIO.output(stepper_4, GPIO.HIGH)
-		time.sleep(t_delay)
-	GPIO.output(stepper_1, GPIO.LOW)
-	GPIO.output(stepper_2, GPIO.LOW)
-	GPIO.output(stepper_3, GPIO.LOW)
-	GPIO.output(stepper_4, GPIO.LOW)
+	def forward():
+		GPIO.output(driver_port_1, GPIO.LOW)
+		GPIO.output(driver_port_2, GPIO.HIGH)
+		time.sleep(2)
+		GPIO.output(driver_port_1, GPIO.LOW)
+		GPIO.output(driver_port_2, GPIO.LOW)
 
 
 # construct the argument parser and parse the arguments
@@ -116,6 +91,7 @@ studentDict = {}
 
 # loop over the frames from the video stream	
 while True:
+
 	# store the current time and calculate the time difference
 	# between the current time and the time for the 
 	currentTime = datetime.now()
