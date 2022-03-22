@@ -84,7 +84,7 @@ def recognize():
                 if len(boxes) > 0:
                         encodings = face_recognition.face_encodings(rgb, boxes)
                         preds = recognizer.predict_proba(encodings)[0]
-                        if max(preds)>0.7:
+                        if max(preds)>0.6:
                                 j = np.argmax(preds)
                                 curPerson = le.classes_[j]
                         else:

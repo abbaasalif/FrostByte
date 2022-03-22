@@ -14,7 +14,7 @@
 
 	// number of face detections before actually saving the faces to
 	// disk
-	"n_face_detection": 20,
+	"n_face_detection": 10,
 	
 	// number of images required per person in the dataset
 	"face_count": 30,
